@@ -1,0 +1,159 @@
+openapi: 3.0.0
+info:
+  title: API
+  version: '0.0.1'
+components:
+  schemas:
+    Todo:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        title:
+          type: string
+        category:
+          type: string
+          enum:
+            - one
+            - two
+            - three
+        content:
+          type: string
+      required:
+        - title
+        - category
+    TodoList:
+      type: object
+      properties:
+        items:
+          readOnly: true
+          type: array
+          items:
+            $ref: '#/components/schemas/Todo'
+        total:
+          type: number
+          readOnly: true
+      required:
+        - items
+        - total
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          readOnly: true
+        message:
+          type: string
+          readOnly: true
+      required:
+        - message
+paths:
+  /todos:
+    get:
+      parameters:
+        - name: Offset
+          required: false
+          in: query
+          schema:
+            type: number
+        - name: Limit
+          required: false
+          in: query
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TodoList'
+      tags:
+        - Todo
+    post:
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Todo'
+      responses:
+        '201':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Todo'
+      tags:
+        - Todo
+  '/todos/{id}':
+    get:
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Todo'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+        - Todo
+    put:
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Todo'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Todo'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+        - Todo
+    delete:
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Success  
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+        - Todo

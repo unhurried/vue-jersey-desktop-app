@@ -1,0 +1,41 @@
+server:
+  port: 0
+spring:
+  output.ansi.enabled: NEVER
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:file:./data;DB_CLOSE_ON_EXIT=FALSE
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      maximum-pool-size: 1
+      minimum-idle: 1
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+logging:
+    level:
+        root: INFO
+proxy:
+  port-forwarding:
+    host: 127.0.0.1
+    port: 22
+    username: username
+    password: password
+  target-list:
+    - name: httpbin
+      scheme: http
+      host: httpbin.org
+      port: 80
+      port-forwarding: false
+      client:
+        id: abc
+        secret: 123
+    - name: httpbin_pf
+      host: httpbin.org
+      port: 80
+      port-forwarding: true
+      client:
+        id: abc
+        secret: 123
