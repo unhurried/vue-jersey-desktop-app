@@ -12,7 +12,7 @@
   "dependencies": {
     "axios": "^0.19.2",
     "bootstrap": "^4.4.1",
-    "bootstrap-vue": "^2.13.0",
+    "bootstrap-vue": "^2.13.1",
     "core-js": "^3.6.5",
     "vee-validate": "^3.3.0",
     "vue": "^2.6.11",
@@ -23,9 +23,9 @@
     "vuex-class": "^0.3.2"
   },
   "devDependencies": {
-    "@openapitools/openapi-generator-cli": "^1.0.12-4.3.0",
-    "@typescript-eslint/eslint-plugin": "^2.30.0",
-    "@typescript-eslint/parser": "^2.30.0",
+    "@openapitools/openapi-generator-cli": "^1.0.13-4.3.1",
+    "@typescript-eslint/eslint-plugin": "^2.31.0",
+    "@typescript-eslint/parser": "^2.31.0",
     "@vue/cli-plugin-babel": "^4.3.1",
     "@vue/cli-plugin-eslint": "^4.3.1",
     "@vue/cli-plugin-router": "^4.3.1",
