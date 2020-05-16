@@ -14,8 +14,9 @@ import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 
-import backend.config.PortForwardingConfig;
+import backend.config.PfConfigService;
 import backend.config.ProxyTargetConfig.Target;
+import backend.repository.entity.PfConfig;
 import lombok.Value;
 
 /** A component that creates and caches a SSH connection and port forwarding settings. */
@@ -23,7 +24,7 @@ import lombok.Value;
 @Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class PortForwardManager {
 
-	@Autowired private PortForwardingConfig portFwConfig;
+	@Autowired private PfConfigService pfConfigService;
 
 	// cache for SSH session (connection)
 	private Session session;
@@ -75,13 +76,13 @@ public class PortForwardManager {
 		// Otherwise, create a new session.
 		try {
 			final JSch jsch = new JSch();
-			final Session session = jsch.getSession(portFwConfig.getUsername(), portFwConfig.getHost(),
-					portFwConfig.getPort());
-			session.setPassword(portFwConfig.getPassword());
+			PfConfig pfConfig = pfConfigService.get();
+			final Session session = jsch.getSession(pfConfig.getUsername(), pfConfig.getHost(), pfConfig.getPort());
+			session.setPassword(pfConfig.getPassword());
 
-			final Properties config = new Properties();
-			config.put("StrictHostKeyChecking", "no");
-			session.setConfig(config);
+			final Properties props = new Properties();
+			props.put("StrictHostKeyChecking", "no");
+			session.setConfig(props);
 
 			session.connect();
 			this.session = session;
