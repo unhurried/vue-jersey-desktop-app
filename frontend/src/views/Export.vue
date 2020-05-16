@@ -16,7 +16,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import Axios from 'axios';
+import Axios, { AxiosStatic } from 'axios';
 
 @Component({
   name: 'Export',
@@ -27,7 +27,8 @@ export default class Export extends Vue {
 
   /* eslint class-methods-use-this: 0 */
   private async onSubmit() {
-    const res = await Axios.get('/api/export/', { responseType: 'blob' });
+    const client: AxiosStatic = await this.$store.dispatch('auth/getAxios');
+    const res = await client.get('/export/', { responseType: 'blob' });
     const blob = new Blob([res.data], { type: 'blob' });
     if (window.navigator.msSaveBlob) {
       window.navigator.msSaveBlob(blob, 'out.xlsx');
