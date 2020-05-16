@@ -14,6 +14,7 @@
           class="col-md-3 navbar
           d-md-block bg-light align-items-start sidebar" id="menu">
           <b-nav class="flex-column">
+            <b-nav-item :to="{ name: 'dashboard' }">Dashboard</b-nav-item>
             <b-nav-item :to="{ name: 'todo/list' }">Todo</b-nav-item>
             <b-nav-item :to="{ name: 'proxy' }">API Proxy</b-nav-item>
             <b-nav-item :to="{ name: 'export' }">Export</b-nav-item>
