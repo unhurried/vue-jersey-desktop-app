@@ -3,52 +3,54 @@
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-3">
       <h2>Port Forwarding Config</h2>
     </div>
-    <ValidationObserver ref="observer" v-slot="{ invalid, passes }">
-      <b-form novalidate @submit.prevent="passes(onSubmit)">
-        <ValidationProvider name="host"
-          rules="required|max:64" v-slot="{ errors, valid, validated }">
-          <b-form-group label-cols-sm="3" label="Host" label-for="host">
-            <b-form-input v-model="config.host" type="text"
-              :state="validated ? valid : null"></b-form-input>
-            <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
-          </b-form-group>
-        </ValidationProvider>
-      </b-form>
-      <b-form novalidate @submit.prevent="passes(onSubmit)">
-        <ValidationProvider name="port"
-          rules="required|max:64" v-slot="{ errors, valid, validated }">
-          <b-form-group label-cols-sm="3" label="Port" label-for="port">
-            <b-form-input v-model="config.port" type="number"
-              :state="validated ? valid : null"></b-form-input>
-            <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
-          </b-form-group>
-        </ValidationProvider>
-      </b-form>
-      <b-form novalidate @submit.prevent="passes(onSubmit)">
-        <ValidationProvider name="username"
-          rules="required|max:64" v-slot="{ errors, valid, validated }">
-          <b-form-group label-cols-sm="3" label="Username" label-for="username">
-            <b-form-input v-model="config.username" type="text"
-              :state="validated ? valid : null"></b-form-input>
-            <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
-          </b-form-group>
-        </ValidationProvider>
-        <ValidationProvider name="password"
-          rules="required|max:64" v-slot="{ errors, valid, validated }">
-          <b-form-group label-cols-sm="3" label="Password" label-for="password">
-            <b-form-input v-model="config.password" type="password"
-              :state="validated ? valid : null"></b-form-input>
-            <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
-          </b-form-group>
-        </ValidationProvider>
+    <b-overlay :show="isLoading" no-fade>
+      <ValidationObserver ref="observer" v-slot="{ invalid, passes }">
+        <b-form novalidate @submit.prevent="passes(onSubmit)" ref="formContainer">
+          <ValidationProvider name="host"
+            rules="required|max:64" v-slot="{ errors, valid, validated }">
+            <b-form-group label-cols-sm="3" label="Host" label-for="host">
+              <b-form-input v-model="config.host" type="text"
+                :state="validated ? valid : null"></b-form-input>
+              <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
+            </b-form-group>
+          </ValidationProvider>
+        </b-form>
+        <b-form novalidate @submit.prevent="passes(onSubmit)">
+          <ValidationProvider name="port"
+            rules="required|max:64" v-slot="{ errors, valid, validated }">
+            <b-form-group label-cols-sm="3" label="Port" label-for="port">
+              <b-form-input v-model="config.port" type="number"
+                :state="validated ? valid : null"></b-form-input>
+              <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
+            </b-form-group>
+          </ValidationProvider>
+        </b-form>
+        <b-form novalidate @submit.prevent="passes(onSubmit)">
+          <ValidationProvider name="username"
+            rules="required|max:64" v-slot="{ errors, valid, validated }">
+            <b-form-group label-cols-sm="3" label="Username" label-for="username">
+              <b-form-input v-model="config.username" type="text"
+                :state="validated ? valid : null"></b-form-input>
+              <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
+            </b-form-group>
+          </ValidationProvider>
+          <ValidationProvider name="password"
+            rules="required|max:64" v-slot="{ errors, valid, validated }">
+            <b-form-group label-cols-sm="3" label="Password" label-for="password">
+              <b-form-input v-model="config.password" type="password"
+                :state="validated ? valid : null"></b-form-input>
+              <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
+            </b-form-group>
+          </ValidationProvider>
 
-        <b-form-group>
-          <b-row class="justify-content-center">
-            <b-button class="col-sm-4" type="submit" variant="primary">Submit</b-button>
-          </b-row>
-        </b-form-group>
-      </b-form>
-    </ValidationObserver>
+          <b-form-group>
+            <b-row class="justify-content-center">
+              <b-button class="col-sm-4" type="submit" variant="primary">Submit</b-button>
+            </b-row>
+          </b-form-group>
+        </b-form>
+      </ValidationObserver>
+    </b-overlay>
   </div>
 </template>
 
@@ -69,9 +71,11 @@ export default class Proxy extends Mixins(Toast) {
     password: '',
   };
   private message: string = '';
+  private isLoading: boolean = true;
 
-  private created(): void {
-    this.refresh();
+  private async created(): Promise<void> {
+    await this.refresh();
+    this.isLoading = false;
   }
 
   private async onSubmit(item: any) {
