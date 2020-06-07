@@ -17,7 +17,6 @@
         </b-form-group>
         <b-form-group class="col-sm-3">
             <b-button block type="submit" variant="primary">Call API</b-button>
-            <a id="exportLink" class="d-none" download="out.xlsx" :href="exportHref" />
         </b-form-group>
       </b-form-row>
     </b-form>

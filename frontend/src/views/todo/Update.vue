@@ -4,13 +4,16 @@
       <h2>Update</h2>
       <b-button variant="secondary" :to="{ name: 'todo/list' }">Back to List</b-button>
     </div>
-    <Form :item="todo" @submit="onSubmit"/>
+    <b-overlay :show="isLoading" no-fade>
+      <Form :item="todo" :is-submitting="isSubmitting" @submit="onSubmit"/>
+    </b-overlay>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Mixins, Vue } from 'vue-property-decorator';
 import Form from '@/components/todo/Form.vue';
+import Toast from '@/mixins/Toast';
 import { Todo, TodoApi, TodoCategoryEnum } from '@/client-axios';
 
 @Component({
@@ -19,21 +22,29 @@ import { Todo, TodoApi, TodoCategoryEnum } from '@/client-axios';
     Form,
   },
 })
-export default class Update extends Vue {
+export default class Update extends Mixins(Toast) {
   private todo: Todo = { title: '', category: TodoCategoryEnum.One };
+  private isLoading: boolean = true;
+  private isSubmitting: boolean = false;
 
-  private created(): void {
-    this.refresh();
+  private async created(): Promise<void> {
+    await this.refresh();
+    this.isLoading = false;
   }
   private async onSubmit(item: Todo) {
-    const todoApi: TodoApi = await this.$store.dispatch('auth/getApi');
-    todoApi.todosIdPut(item.id as string, {
-      title: item.title,
-      category: item.category,
-      content: item.content,
-    }).then(() => {
-      this.refresh();
-    });
+    this.isSubmitting = true;
+    try {
+      const todoApi: TodoApi = await this.$store.dispatch('auth/getApi');
+      await todoApi.todosIdPut(item.id as string, {
+        title: item.title,
+        category: item.category,
+        content: item.content,
+      });
+    } catch (error) {
+      this.toast('Failed to submit data.', 'danger');
+    }
+    this.isSubmitting = false;
+    this.refresh();
   }
   private async refresh(): Promise<void> {
     const todoApi: TodoApi = await this.$store.dispatch('auth/getApi');

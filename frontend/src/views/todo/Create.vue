@@ -4,13 +4,14 @@
       <h2>Create a new Todo item</h2>
       <b-button variant="secondary" :to="{ name: 'todo/list' }">Back to List</b-button>
     </div>
-    <Form :item="todo" @submit="onSubmit"/>
+    <Form :item="todo" :is-submitting="isSubmitting" @submit="onSubmit"/>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Mixins, Vue } from 'vue-property-decorator';
 import Form from '@/components/todo/Form.vue';
+import Toast from '@/mixins/Toast';
 import { Todo, TodoApi, TodoCategoryEnum } from '@/client-axios';
 
 @Component({
@@ -19,17 +20,24 @@ import { Todo, TodoApi, TodoCategoryEnum } from '@/client-axios';
     Form,
   },
 })
-export default class Create extends Vue {
+export default class Create extends Mixins(Toast) {
   private todo: Todo = { title: '', category: TodoCategoryEnum.One };
+  private isSubmitting: boolean = false;
 
   private async onSubmit(item: Todo) {
-    const todoApi: TodoApi = await this.$store.dispatch('auth/getApi');
-    const result = await todoApi.todosPost({
-      title: item.title,
-      category: item.category,
-      content: item.content,
-    });
-    this.$router.push({ name: 'todo/update', params: { userId: result.data.id as string } });
+    this.isSubmitting = true;
+    try {
+      const todoApi: TodoApi = await this.$store.dispatch('auth/getApi');
+      const result = await todoApi.todosPost({
+        title: item.title,
+        category: item.category,
+        content: item.content,
+      });
+      this.$router.push({ name: 'todo/update', params: { userId: result.data.id as string } });
+    } catch (error) {
+      this.toast('Failed to create a Todo item.', 'danger');
+    }
+    this.isSubmitting = false;
   }
 }
 </script>
