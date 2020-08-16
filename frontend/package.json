@@ -1,6 +1,6 @@
 {
   "name": "vue-jersey-desktop-app-frontend",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "license": "MIT",
   "scripts": {
     "prebuild": "rimraf ../backend/src/main/resources/static",
