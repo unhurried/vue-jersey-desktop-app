@@ -1,6 +1,5 @@
 package backend.resource.bean
 
-import lombok.Data
 import javax.ws.rs.DefaultValue
 import javax.ws.rs.QueryParam
 

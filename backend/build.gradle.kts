@@ -36,9 +36,7 @@ dependencies {
 	implementation("org.apache.poi:poi-ooxml:4.1.2")
 	implementation("org.apache.httpcomponents:httpclient:4.5.12")
 	implementation("com.jcraft:jsch:0.1.55")
-	compileOnly("org.projectlombok:lombok")
 	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
-	annotationProcessor("org.projectlombok:lombok")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	testImplementation("org.springframework.boot:spring-boot-starter-test") {
 		exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
