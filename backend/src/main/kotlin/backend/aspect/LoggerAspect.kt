@@ -11,11 +11,13 @@ import javax.servlet.http.HttpServletRequest
 @Aspect
 @Component
 class LoggerAspect (val request: HttpServletRequest) {
-    private val logger = LoggerFactory.getLogger(LoggerAspect::class.java)
+    companion object {
+        private val log = LoggerFactory.getLogger(this::class.java)
+    }
 
     // @Before: Execute an advice before a join point.
     @Before("within(backend.resource.ToDoResource)")
     public fun before() {
-        logger.info("API call: " + request.method + " " + request.pathInfo);
+        log.info("API call: " + request.method + " " + request.pathInfo);
     }
 }
