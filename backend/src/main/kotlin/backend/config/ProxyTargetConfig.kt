@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component
 
 /** configuration for API proxy (loaded from application.yaml)  */
 @Component
+// Specify the basename of the key (load properties starting with "proxy").
 @ConfigurationProperties(prefix = "proxy")
 data class ProxyTargetConfig (
     var targetList: List<Target>? = null

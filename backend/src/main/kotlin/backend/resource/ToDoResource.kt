@@ -18,11 +18,13 @@ import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
 
 /** A JAX-RS (Jersey) resource class for ToDo items  */
+// Resource classes must be annotated with one of @Component, @Service, @Controller, @Repository.
+// (Note: Spring AOP does't work if @Named is used instead.)
 @Component
-@Path("todos")
-@Consumes(MediaType.APPLICATION_JSON)
-@Produces(MediaType.APPLICATION_JSON)
-@Transactional
+@Path("todos") // Base path for all methods in the class
+@Consumes(MediaType.APPLICATION_JSON) // Content-Type of request body
+@Produces(MediaType.APPLICATION_JSON) // Content-Type of response body
+@Transactional // Make all the methods in the class transactional.
 class ToDoResource {
     @Autowired
     private lateinit var repository: ToDoRepository
