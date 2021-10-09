@@ -37,9 +37,10 @@ class ToDoResource {
     fun getList(@BeanParam listParam: ListParam): Response {
         val pageable: Pageable = PageRequest.of(listParam.page, listParam.size)
         val entityList = repository.findAll(pageable)
-        val list = ToDoListBean()
-        list.items = beanHelper.createAndCopyIterable(entityList, ToDoBean::class.java, BiConsumer { src: ToDo, target: ToDoBean -> target.category = ToDoBean.Category.valueOf(src.category.toString()) })
-        list.total = entityList.totalElements
+        val list = ToDoListBean(
+            items = beanHelper.createAndCopyIterable(entityList, ToDoBean::class.java, BiConsumer { src: ToDo, target: ToDoBean -> target.category = ToDoBean.Category.valueOf(src.category.toString()) }),
+            total = entityList.totalElements
+        )
         return Response.ok().entity(list).build()
     }
 
