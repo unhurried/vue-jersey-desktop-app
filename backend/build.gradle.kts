@@ -27,7 +27,7 @@ dependencies {
 	implementation("com.h2database:h2")
 	implementation("org.apache.poi:poi:4.1.2")
 	implementation("org.apache.poi:poi-ooxml:4.1.2")
-	implementation("org.apache.httpcomponents:httpclient:4.5.12")
+	implementation("org.apache.httpcomponents:httpclient:4.5.13")
 	implementation("com.jcraft:jsch:0.1.55")
 	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
