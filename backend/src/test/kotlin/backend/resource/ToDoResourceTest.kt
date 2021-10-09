@@ -16,7 +16,7 @@ import javax.ws.rs.core.Response
 // webEnvironment specifies how the servlet environment is provided.
 // (Provide a real or mock servlet environment, or not using a servlet.)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
-class ToDoResourceTest (@Autowired val resource: ToDoResource) {
+class ToDoResourceTest (@Autowired private val resource: ToDoResource) {
 
     // Use @MockBean (Spring Boot annotation) instead of @Mock (Mockito annotation).
     @MockBean lateinit var repository: ToDoRepository

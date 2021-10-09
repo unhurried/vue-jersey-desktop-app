@@ -7,7 +7,6 @@ import backend.resource.bean.ListParam
 import backend.resource.bean.ToDoBean
 import backend.resource.bean.ToDoListBean
 import backend.resource.exception.NotFoundException
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Component
@@ -25,12 +24,7 @@ import javax.ws.rs.core.Response
 @Consumes(MediaType.APPLICATION_JSON) // Content-Type of request body
 @Produces(MediaType.APPLICATION_JSON) // Content-Type of response body
 @Transactional // Make all the methods in the class transactional.
-class ToDoResource {
-    @Autowired
-    private lateinit var repository: ToDoRepository
-
-    @Autowired
-    private lateinit var beanHelper: BeanHelper
+class ToDoResource (private val repository: ToDoRepository, val beanHelper: BeanHelper) {
 
     /** GET /api/todos: Get a list of todo items.  */
     @GET

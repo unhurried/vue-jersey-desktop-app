@@ -1,7 +1,5 @@
 package backend.gui
 
-import org.springframework.beans.factory.NoSuchBeanDefinitionException
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext
 import org.springframework.context.ApplicationContext
@@ -14,8 +12,8 @@ import java.io.IOException
 /** A command line component that opens the application URL in default browser.  */
 @Component
 class Browser(
-    @Autowired val context: ApplicationContext,
-    @Autowired val environment: Environment) : CommandLineRunner {
+    val context: ApplicationContext,
+    val environment: Environment) : CommandLineRunner {
 
     @Throws(IOException::class)
     override fun run(vararg args: String) {
