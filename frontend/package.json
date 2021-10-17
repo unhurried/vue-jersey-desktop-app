@@ -10,7 +10,7 @@
     "generate-client": "openapi-generator generate -g typescript-axios -i ./open-api.yaml -o ./src/client-axios"
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.2",
     "bootstrap": "^4.5.2",
     "bootstrap-vue": "^2.16.0",
     "core-js": "^3.6.5",
