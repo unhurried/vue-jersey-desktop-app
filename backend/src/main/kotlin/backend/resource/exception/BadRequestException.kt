@@ -6,12 +6,6 @@ import javax.ws.rs.core.Response.*
 import javax.ws.rs.core.Response.Status.*
 
 /** An exception to return a bad request (401) error  */
-class BadRequestException(errorCode: String) : WebApplicationException(
-        status(BAD_REQUEST).entity(createErrorBean(errorCode)).build()
-) {
-    companion object {
-        private fun createErrorBean(errorCode: String): ErrorBean {
-            return ErrorBean(errorCode)
-        }
-    }
-}
+class BadRequestException(errorCode: String) : WebApplicationException (
+    status(BAD_REQUEST).entity(ErrorBean(errorCode)).build()
+)
