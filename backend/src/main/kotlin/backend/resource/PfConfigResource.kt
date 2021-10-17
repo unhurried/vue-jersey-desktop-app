@@ -4,7 +4,6 @@ import backend.config.PfConfigService
 import backend.helper.BeanHelper
 import backend.repository.entity.PfConfig
 import backend.resource.bean.PfConfigBean
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import javax.transaction.Transactional
 import javax.ws.rs.*
@@ -17,12 +16,7 @@ import javax.ws.rs.core.Response
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @Transactional
-class PfConfigResource {
-    @Autowired
-    private lateinit var pfConfigService: PfConfigService
-
-    @Autowired
-    private lateinit var beanHelper: BeanHelper
+class PfConfigResource (private val pfConfigService: PfConfigService, private val beanHelper: BeanHelper) {
 
     @GET
     fun get(): Response {

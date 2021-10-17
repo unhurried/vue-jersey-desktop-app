@@ -1,8 +1,5 @@
 package backend.resource.bean
 
-import lombok.Data
-import java.io.Serializable
-
 /** Data Transfer Object for request and response bodies of ConfigResource  */
 data class PfConfigBean(
     var host: String? = null,

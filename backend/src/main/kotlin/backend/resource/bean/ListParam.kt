@@ -1,12 +1,11 @@
 package backend.resource.bean
 
-import lombok.Data
 import javax.ws.rs.DefaultValue
 import javax.ws.rs.QueryParam
 
 /** Data Transfer Object for request parameters for list resources.  */
 data class ListParam (
-    @DefaultValue("3")
+    @DefaultValue("10")
     @QueryParam("size")
     val size: Int = 0,
 

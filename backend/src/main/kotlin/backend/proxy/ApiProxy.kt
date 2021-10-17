@@ -6,7 +6,6 @@ import org.apache.http.client.methods.RequestBuilder
 import org.apache.http.entity.StringEntity
 import org.apache.http.impl.client.HttpClients
 import org.apache.http.util.EntityUtils
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import java.io.IOException
 import java.net.URI
@@ -15,12 +14,7 @@ import javax.ws.rs.core.UriBuilder
 
 /** A service class that proxies API requests and responses.  */
 @Component
-class ApiProxy {
-    @Autowired
-    private lateinit var proxyTargetConfig: ProxyTargetConfig
-
-    @Autowired
-    private lateinit var pfManager: PortForwardManager
+class ApiProxy (private val proxyTargetConfig: ProxyTargetConfig, private val pfManager: PortForwardManager) {
 
     /** Proxies API requests to targets specified in configuration (application.yaml).  */
     @Throws(InvalidTargetException::class)

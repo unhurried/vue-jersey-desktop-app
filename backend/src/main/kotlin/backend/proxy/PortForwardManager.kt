@@ -5,7 +5,6 @@ import backend.config.ProxyTargetConfig
 import com.jcraft.jsch.JSch
 import com.jcraft.jsch.JSchException
 import com.jcraft.jsch.Session
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.config.ConfigurableBeanFactory
 import org.springframework.context.annotation.Scope
 import org.springframework.stereotype.Component
@@ -16,12 +15,9 @@ import java.util.*
 /** A component that creates and caches a SSH connection and port forwarding settings.  */
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
-class PortForwardManager {
-    @Autowired
-    private lateinit var pfConfigService: PfConfigService
+class PortForwardManager (private val pfConfigService: PfConfigService) {
 
     // Return the existing session when it is still alive.
-
     // Otherwise, create a new session.
 
     /** Get an existing SSH session or create a new one.  */

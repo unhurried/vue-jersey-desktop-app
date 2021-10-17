@@ -1,12 +1,11 @@
 package backend.config
 
-import lombok.Data
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.stereotype.Component
-import kotlin.annotation.Target
 
 /** configuration for API proxy (loaded from application.yaml)  */
 @Component
+// Specify the basename of the key (load properties starting with "proxy").
 @ConfigurationProperties(prefix = "proxy")
 data class ProxyTargetConfig (
     var targetList: List<Target>? = null

@@ -3,7 +3,6 @@ package backend.resource
 import backend.proxy.ApiProxy
 import backend.proxy.InvalidTargetException
 import backend.resource.exception.BadRequestException
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
 import javax.ws.rs.*
 import javax.ws.rs.core.Context
@@ -12,15 +11,10 @@ import javax.ws.rs.core.Response
 import javax.ws.rs.core.UriInfo
 
 @Path("proxy/{target}/{path:.*}")
-class ProxyResource {
-    @Autowired
-    lateinit var apiProxy: ApiProxy
-
-    @Context
-    lateinit var uriInfo: UriInfo
-
-    @Context
-    lateinit var headers: HttpHeaders
+class ProxyResource (
+    private val apiProxy: ApiProxy,
+    @Context private val uriInfo: UriInfo,
+    @Context private val headers: HttpHeaders){
 
     @GET
     @Consumes(MediaType.APPLICATION_JSON_VALUE)

@@ -12,8 +12,8 @@ import javax.ws.rs.ext.Provider
  * (CORS headers are not required in "production" mode as frontend app is served from backend server.)  */
 @Provider
 class CorsFilter : ContainerResponseFilter {
-    @Autowired
-    private lateinit var environment: Environment
+    // Constructor injection cannot be used for ContainerResponseFilter instances.
+    @Autowired private lateinit var environment: Environment
 
     @Throws(IOException::class)
     override fun filter(request: ContainerRequestContext, response: ContainerResponseContext) {
